@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using Data.ValueObject;
 using ShooterScripts.Controller;
 using ShooterScripts.Signalable;
+using StubScripts.PipesScripts.ValueData;
 using UnityEngine;
 
 namespace ShooterScripts.Manager
@@ -40,7 +42,7 @@ namespace ShooterScripts.Manager
         }
         #endregion
 
-        private void OnShooter(List<Rigidbody> pipes)
+        private void OnShooter(List<PipeData> pipes)
         {
             shooterController.Shooter(pipes);
         }

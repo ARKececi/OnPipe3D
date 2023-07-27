@@ -1,4 +1,5 @@
 ﻿using System;
+using LevelScripts.Signalable;
 using PlayerScripts.Signalable;
 using UnityEngine;
 
@@ -10,16 +11,28 @@ namespace InputScripts.InputManager
 
         #region Serialized Variables
 
-        [SerializeField] private bool isReadyForTouch, isFirstTimeTouchTaken;
+        [SerializeField] private bool isFirstTimeTouchTaken;
 
         #endregion
 
         #endregion
         private void Update()
         {
-            if (!isReadyForTouch) return;
-            if (Input.GetMouseButtonDown(0)) PlayerSignalable.Instance.onEnableScaleMovement?.Invoke();
+            if (Input.GetMouseButtonDown(0))
+            {
+                PlayerSignalable.Instance.onEnableScaleMovement?.Invoke();
+                if (isFirstTimeTouchTaken != true)
+                {
+                    LevelSignalable.Instance.onGameStart?.Invoke();
+                    isFirstTimeTouchTaken = true;
+                }
+            }
             if (Input.GetMouseButtonUp(0)) PlayerSignalable.Instance.onDeactiveScaleMovement?.Invoke();
+        }
+
+        private void Reset()
+        {
+            isFirstTimeTouchTaken = false;
         }
     }
 }

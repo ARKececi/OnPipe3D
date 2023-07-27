@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Data.ValueObject;
+using StubScripts.PipesScripts.ValueData;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -16,13 +18,13 @@ namespace ShooterScripts.Controller
 
         #endregion
         
-        public void Shooter(List<Rigidbody> pipes)
+        public void Shooter(List<PipeData> pipes)
         {
-            foreach (var varıable in pipes)
+            foreach (var pipeData in pipes)
             {
-                varıable.useGravity = true;
-                varıable.AddForce(varıable.transform.right * force, ForceMode.Impulse);
-                varıable.AddForce(varıable.transform.up * force, ForceMode.Impulse);
+                pipeData.Rigidbody.useGravity = true;
+                pipeData.Rigidbody.AddForce(pipeData.Rigidbody.transform.right * force, ForceMode.Impulse);
+                pipeData.Rigidbody.AddForce(pipeData.Rigidbody.transform.up * force, ForceMode.Impulse);
             }
         }
     }

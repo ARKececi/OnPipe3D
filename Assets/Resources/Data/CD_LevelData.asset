@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34957186e10e4201834be65028614c82, type: 3}
+  m_Name: CD_LevelData
+  m_EditorClassIdentifier: 
+  LevelData:
+    m_Keys: 00000000
+    m_Values:
+    - LevelRod:
+      - {fileID: 7434062062172493855, guid: 95eac7e2ca8dc494faab9ec38902c1e7, type: 3}
+      - {fileID: 4589790603604033738, guid: f20895ec5ca72e341a3bcdaf5571ebb1, type: 3}
+      - {fileID: 4589790603604033738, guid: 42502cfdb43b30744b085867c0805051, type: 3}
+      RodSpawnPositionAmount: 20

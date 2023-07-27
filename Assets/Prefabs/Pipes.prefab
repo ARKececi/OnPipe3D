@@ -64,22 +64,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pipesRigidbodies:
-  - {fileID: 8138128155452936531}
-  - {fileID: 5054341442334606266}
-  - {fileID: 5054341443296664042}
-  - {fileID: 5054341441791204496}
-  - {fileID: 5054341443287431937}
-  - {fileID: 5054341441751731825}
-  - {fileID: 5054341442027899355}
-  - {fileID: 5054341442691333368}
-  - {fileID: 5054341442528637526}
-  - {fileID: 5054341443125662355}
-  - {fileID: 5054341442937800265}
-  - {fileID: 5054341441393104422}
-  - {fileID: 5054341442915103229}
-  - {fileID: 5054341443307115604}
-  - {fileID: 5054341441872900621}
-  - {fileID: 5054341441488794527}
+  - Transform: {fileID: 8138128155452936530}
+    Rigidbody: {fileID: 8138128155452936531}
+  - Transform: {fileID: 5054341442334606267}
+    Rigidbody: {fileID: 5054341442334606266}
+  - Transform: {fileID: 5054341443296664043}
+    Rigidbody: {fileID: 5054341443296664042}
+  - Transform: {fileID: 5054341441791204497}
+    Rigidbody: {fileID: 5054341441791204496}
+  - Transform: {fileID: 5054341443287431936}
+    Rigidbody: {fileID: 5054341443287431937}
+  - Transform: {fileID: 5054341441751731824}
+    Rigidbody: {fileID: 5054341441751731825}
+  - Transform: {fileID: 5054341442027899354}
+    Rigidbody: {fileID: 5054341442027899355}
+  - Transform: {fileID: 5054341442691333369}
+    Rigidbody: {fileID: 5054341442691333368}
+  - Transform: {fileID: 5054341442528637527}
+    Rigidbody: {fileID: 5054341442528637526}
+  - Transform: {fileID: 5054341443125662354}
+    Rigidbody: {fileID: 5054341443125662355}
+  - Transform: {fileID: 5054341442937800264}
+    Rigidbody: {fileID: 5054341442937800265}
+  - Transform: {fileID: 5054341441393104423}
+    Rigidbody: {fileID: 5054341441393104422}
+  - Transform: {fileID: 5054341442915103228}
+    Rigidbody: {fileID: 5054341442915103229}
+  - Transform: {fileID: 5054341443307115605}
+    Rigidbody: {fileID: 5054341443307115604}
+  - Transform: {fileID: 5054341441872900620}
+    Rigidbody: {fileID: 5054341441872900621}
+  - Transform: {fileID: 5054341441488794526}
+    Rigidbody: {fileID: 5054341441488794527}
+  timer: 2
 --- !u!114 &8138128156141608943
 MonoBehaviour:
   m_ObjectHideFlags: 0

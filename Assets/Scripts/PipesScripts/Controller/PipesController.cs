@@ -1,5 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Timers;
+using Data.ValueObject;
 using ShooterScripts.Signalable;
+using Signalable;
+using StubScripts.PipesScripts.ValueData;
 using UnityEngine;
 
 namespace PipesScripts.Controller
@@ -10,8 +15,14 @@ namespace PipesScripts.Controller
 
         #region Serialized Variables
 
-        [SerializeField] private List<Rigidbody> pipesRigidbodies = new List<Rigidbody>();
+        [SerializeField] private List<PipeData> pipesRigidbodies = new List<PipeData>();
 
+        #endregion
+
+        #region Private Variables
+        
+        private float _timer;
+        
         #endregion
 
         #endregion
@@ -19,6 +30,14 @@ namespace PipesScripts.Controller
         public void Shoot()
         {
             ShooterSignalable.Instance.onShooter?.Invoke(pipesRigidbodies);
+        }
+
+        public void OnEnable()
+        {
+            foreach (var VARIABLE in pipesRigidbodies)
+            {
+                PoolSignalable.Instance.onListPipeAdd?.Invoke(VARIABLE);
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using CameraScripts.Signalable;
+using LevelScripts.Signalable;
 using UnityEngine;
 
 namespace PlayerScripts.Controllers
@@ -30,6 +31,11 @@ namespace PlayerScripts.Controllers
             {
                 playerController.EnableGameOver();
                 CameraSignalable.Instance.onShakeCamera?.Invoke();
+            }
+
+            if (other.CompareTag("Spawn"))
+            {
+                LevelSignalable.Instance.onNextRod?.Invoke();
             }
         }
 

@@ -74,11 +74,6 @@ namespace PlayerScripts.Controllers
         private void ReduceScale() { playerTransform.localScale = new Vector3(playerTransform.localScale.x - _playerData.Amount, playerTransform.localScale.y, playerTransform.localScale.z - _playerData.Amount);}
         private void EnlargeScale() { playerTransform.localScale = new Vector3(playerTransform.localScale.x + _playerData.Amount, playerTransform.localScale.y, playerTransform.localScale.z + _playerData.Amount);}
 
-        private void OnEnable()
-        {
-            CameraSignalable.Instance.onSetCamera?.Invoke(gameObject);
-        }
-        
         private void FixedUpdate()
         {
             Move();
