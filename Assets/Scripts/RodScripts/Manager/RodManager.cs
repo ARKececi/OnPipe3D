@@ -18,6 +18,8 @@ namespace RodScripts.Manager
 
         #region Private Variables
 
+        private List<GameObject> _stub = new List<GameObject>();
+
         private bool _notFirstEnable;
 
         #endregion
@@ -25,13 +27,12 @@ namespace RodScripts.Manager
         #endregion
         private void OnEnable()
         {
-            if (_notFirstEnable) return;
             foreach (var VARIABLE in stupPosition)
             {
                GameObject stup = PoolSignalable.Instance.onListRemove?.Invoke(PoolType.Stup);
+               _stub.Add(stup);
                stup.transform.position = VARIABLE.transform.position;
             }
-            _notFirstEnable = true;
         }
     }
 }

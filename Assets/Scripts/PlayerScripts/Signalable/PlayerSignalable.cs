@@ -8,5 +8,6 @@ namespace PlayerScripts.Signalable
     {
         public UnityAction onEnableScaleMovement = delegate { };
         public UnityAction onDeactiveScaleMovement = delegate { };
+        public UnityAction onReset = delegate { };
     }
 }

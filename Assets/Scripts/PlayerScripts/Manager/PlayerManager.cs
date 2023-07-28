@@ -41,12 +41,14 @@ namespace PlayerScripts.Manager
         {
             PlayerSignalable.Instance.onEnableScaleMovement += OnEnableScaleMovement;
             PlayerSignalable.Instance.onDeactiveScaleMovement += OnDeactiveScaleMovement;
+            PlayerSignalable.Instance.onReset += OnReset;
         }
 
         private void UnsubscribeEvents()
         {
             PlayerSignalable.Instance.onEnableScaleMovement -= OnEnableScaleMovement;
             PlayerSignalable.Instance.onDeactiveScaleMovement -= OnDeactiveScaleMovement;
+            PlayerSignalable.Instance.onReset -= OnReset;
         }
 
         private void OnDisable()
@@ -68,6 +70,11 @@ namespace PlayerScripts.Manager
         private void OnDeactiveScaleMovement()
         {
             playerController.IsReadyToScaleMove = false;
+        }
+
+        private void OnReset()
+        {
+            playerController.Reset();
         }
     }
 }

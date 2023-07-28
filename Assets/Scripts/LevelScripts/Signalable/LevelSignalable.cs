@@ -8,5 +8,6 @@ namespace LevelScripts.Signalable
     {
         public UnityAction onNextRod = delegate { };
         public UnityAction onGameStart = delegate { };
+        public UnityAction onNextLevel = delegate { };
     }
 }

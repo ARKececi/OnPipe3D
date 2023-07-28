@@ -85,7 +85,7 @@ namespace PlayerScripts.Controllers
             rigidbody.velocity = _gameOver == false ? new Vector3(0, _playerData.Speed, 0) : Vector3.zero;
         }
 
-        private void Reset()
+        public void Reset()
         {
             _gameOver = false;
             IsReadyToScaleMove = false;

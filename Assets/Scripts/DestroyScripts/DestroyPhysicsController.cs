@@ -1,4 +1,6 @@
 ﻿using System;
+using Enums;
+using Signalable;
 using UnityEngine;
 
 namespace DestroyScripts
@@ -9,7 +11,12 @@ namespace DestroyScripts
         {
             if (other.CompareTag("Ball"))
             {
-                other.gameObject.SetActive(false);
+                PoolSignalable.Instance.onPipePlacement?.Invoke(other.gameObject);
+            }
+
+            if (other.CompareTag("Stub"))
+            {
+                PoolSignalable.Instance.onListAdd?.Invoke(other.gameObject,PoolType.Stup);
             }
         }
     }

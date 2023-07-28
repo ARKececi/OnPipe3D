@@ -16,6 +16,7 @@ namespace CameraScripts.CameraManager
         [SerializeField] private Animator animator;
         [SerializeField] private float amplitudeGain;
         [SerializeField] private float timer;
+        [SerializeField] private GameObject player;
 
         #endregion
 
@@ -47,12 +48,14 @@ namespace CameraScripts.CameraManager
         {
             CameraSignalable.Instance.onSetCamera += OnSetCamera;
             CameraSignalable.Instance.onShakeCamera += OnShakeCamera;
+            CameraSignalable.Instance.onReset += OnReset;
         }
 
         private void UnsubscribeEvents()
         {
             CameraSignalable.Instance.onSetCamera -= OnSetCamera;
             CameraSignalable.Instance.onShakeCamera -= OnShakeCamera;
+            CameraSignalable.Instance.onReset -= OnReset;
         }
 
         private void OnDisable()
@@ -75,7 +78,7 @@ namespace CameraScripts.CameraManager
         private void OnSetCamera(GameObject player)
         {
             _player = player.transform;
-            vmStateCamera.Follow = _player;
+            vmCamera.Follow = _player;
         }
 
         private void ShakeTimer()
@@ -99,6 +102,11 @@ namespace CameraScripts.CameraManager
         private void Update()
         {
             ShakeTimer();
+        }
+
+        private void OnReset()
+        {
+            OnSetCamera(player);
         }
     }
 }

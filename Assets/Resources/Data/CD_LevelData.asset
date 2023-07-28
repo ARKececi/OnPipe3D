@@ -13,10 +13,15 @@ MonoBehaviour:
   m_Name: CD_LevelData
   m_EditorClassIdentifier: 
   LevelData:
-    m_Keys: 00000000
+    m_Keys: 0000000001000000
     m_Values:
     - LevelRod:
       - {fileID: 7434062062172493855, guid: 95eac7e2ca8dc494faab9ec38902c1e7, type: 3}
       - {fileID: 4589790603604033738, guid: f20895ec5ca72e341a3bcdaf5571ebb1, type: 3}
       - {fileID: 4589790603604033738, guid: 42502cfdb43b30744b085867c0805051, type: 3}
+      RodSpawnPositionAmount: 20
+    - LevelRod:
+      - {fileID: 7434062062172493855, guid: 6e5a6cb662568664a91f2d697ebf43f6, type: 3}
+      - {fileID: 4589790603604033738, guid: 6a0815424982d3344b1e6d5653089aca, type: 3}
+      - {fileID: 4589790603604033738, guid: 14b21b1715b6f23408d4ed54a3a1a303, type: 3}
       RodSpawnPositionAmount: 20

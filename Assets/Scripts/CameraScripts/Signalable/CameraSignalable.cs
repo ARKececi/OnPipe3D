@@ -8,5 +8,6 @@ namespace CameraScripts.Signalable
     {
        public UnityAction<GameObject> onSetCamera = delegate { };
        public UnityAction onShakeCamera = delegate { };
+       public UnityAction onReset = delegate { };
     }
 }

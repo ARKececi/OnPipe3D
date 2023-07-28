@@ -26,7 +26,7 @@ namespace Controllers.PoolController
 
         #region Private Variables
 
-        private bool _notFirstPooling;
+        private SerializedDictionary<GameObject, LocationData> _location = new SerializedDictionary<GameObject, LocationData> ();
 
         #endregion
 
@@ -93,14 +93,19 @@ namespace Controllers.PoolController
         public void ListPipeAdd(PipeData pipe)
         {
             pipes.Add(pipe.Transform.gameObject,pipe);
+            LocationData locationData = new LocationData();
+            locationData.Position = pipe.Transform.transform.localPosition;
+            locationData.Rotation = pipe.Transform.transform.eulerAngles;
+            _location.Add(pipe.Transform.gameObject,locationData);
         }
 
         public void PipePlacement(GameObject pipe)
         {
             pipes[pipe].Rigidbody.useGravity = false;
             pipes[pipe].Rigidbody.velocity = Vector3.zero;
-            pipe.transform.position = pipes[pipe].Transform.position;
-            pipe.transform.rotation = pipes[pipe].Transform.rotation;
+            pipe.transform.localPosition = _location[pipe].Position;
+            pipe.transform.eulerAngles = _location[pipe].Rotation;
+            _location.Remove(pipe);
         }
     }
 }
