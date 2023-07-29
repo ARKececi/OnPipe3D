@@ -1,4 +1,9 @@
-﻿using DG.Tweening;
+﻿using CameraScripts.Signalable;
+using DG.Tweening;
+using InputScripts.Signalable;
+using LevelScripts.Signalable;
+using PlayerScripts.Signalable;
+using Signalable;
 using TMPro;
 using UISicripts.Controller;
 using UISicripts.Enum;
@@ -29,12 +34,14 @@ namespace UISicripts.Manager
 
         private void SubscribeEvents()
         {
-
+            UISignalable.Instance.onGameNext += OnGameNext;
+            UISignalable.Instance.onGameOver += OnGameOver;
         }
 
         private void UnsubscribeEvents()
         {
-
+            UISignalable.Instance.onGameNext -= OnGameNext;
+            UISignalable.Instance.onGameOver -= OnGameOver;
         }
 
         private void OnDisable()
@@ -43,7 +50,25 @@ namespace UISicripts.Manager
         }
         #endregion
 
-        private void FinishPanelAlpha()
+        private void OnGameOver()
+        {
+            PoolSignalable.Instance.onReset?.Invoke();
+            LevelSignalable.Instance.onReset?.Invoke();
+            PlayerSignalable.Instance.onReset?.Invoke();
+            CameraSignalable.Instance.onReset?.Invoke();
+            InputSignalable.Instance.onReset?.Invoke();
+        }
+
+        private void OnGameNext()
+        {
+            PoolSignalable.Instance.onReset?.Invoke();
+            LevelSignalable.Instance.onNextLevel?.Invoke();
+            PlayerSignalable.Instance.onReset?.Invoke();
+            CameraSignalable.Instance.onReset?.Invoke();
+            InputSignalable.Instance.onReset?.Invoke();
+        }
+
+        private void PanelAlpha()
         {
             
         }

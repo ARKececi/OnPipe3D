@@ -16,6 +16,14 @@ namespace UISicripts.Controller
 
         #endregion
 
+        public void OpenPanel(UIPanel panelParam )
+        {
+            panels[(int) panelParam].SetActive(true);
+        }
 
+        public void ClosePanel(UIPanel panelParam)
+        {
+            panels[(int) panelParam].SetActive(false);
+        }
     }
 }

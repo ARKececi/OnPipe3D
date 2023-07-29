@@ -8,5 +8,8 @@ namespace InputScripts.Signalable
     {
         public UnityAction onIsFinishTimeTaken = delegate { };
         public UnityAction onReset = delegate { };
+        public UnityAction onGameOver = delegate { };
+        public UnityAction onfinish = delegate { };
+        
     }
 }

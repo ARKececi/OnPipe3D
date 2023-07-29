@@ -36,7 +36,17 @@ namespace PipesScripts.Controller
         {
             foreach (var VARIABLE in pipesRigidbodies)
             {
+                VARIABLE.Transform.gameObject.SetActive(true);
                 PoolSignalable.Instance.onListPipeAdd?.Invoke(VARIABLE);
+            }
+        }
+
+        public void OnDisable()
+        {
+            foreach (var VARIABLE in pipesRigidbodies)
+            {
+                VARIABLE.Transform.gameObject.SetActive(false);
+                PoolSignalable.Instance.onListPipeRemove?.Invoke(VARIABLE);
             }
         }
     }

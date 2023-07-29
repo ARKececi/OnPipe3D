@@ -31,6 +31,8 @@ namespace Managers
             PoolSignalable.Instance.onListRemove += OnListRemove;
             PoolSignalable.Instance.onListPipeAdd += OnListPipeAdd;
             PoolSignalable.Instance.onPipePlacement += OnPipePlacement;
+            PoolSignalable.Instance.onListPipeRemove += OnListPipeRemove;
+            PoolSignalable.Instance.onReset += OnReset;
         }
 
         private void UnsubscribeEvents()
@@ -39,6 +41,8 @@ namespace Managers
             PoolSignalable.Instance.onListRemove -= OnListRemove;
             PoolSignalable.Instance.onListPipeAdd -= OnListPipeAdd;
             PoolSignalable.Instance.onPipePlacement -= OnPipePlacement;
+            PoolSignalable.Instance.onListPipeRemove -= OnListPipeRemove;
+            PoolSignalable.Instance.onReset -= OnReset;
         }
 
         private void OnDisable()
@@ -48,24 +52,34 @@ namespace Managers
         
         #endregion
 
-        public void OnListAdd(GameObject poolObj, PoolType poolType)
+        private void OnListAdd(GameObject poolObj, PoolType poolType)
         {
             poolController.Listadd(poolObj,poolType);
         }
 
-        public GameObject OnListRemove(PoolType poolType)
+        private GameObject OnListRemove(PoolType poolType)
         {
             return poolController.ListRemove(poolType);
         }
 
-        public void OnListPipeAdd(PipeData pipeData)
+        private void OnListPipeAdd(PipeData pipeData)
         {
             poolController.ListPipeAdd(pipeData);
         }
 
-        public void OnPipePlacement(GameObject pipe)
+        private void OnPipePlacement(GameObject pipe)
         {
             poolController.PipePlacement(pipe);
+        }
+
+        private void OnListPipeRemove(PipeData pipe)
+        {
+            poolController.ListPipeRemove(pipe);
+        }
+
+        private void OnReset()
+        {
+            poolController.Reset();
         }
     }
 }

@@ -105,7 +105,33 @@ namespace Controllers.PoolController
             pipes[pipe].Rigidbody.velocity = Vector3.zero;
             pipe.transform.localPosition = _location[pipe].Position;
             pipe.transform.eulerAngles = _location[pipe].Rotation;
-            _location.Remove(pipe);
+            pipe.SetActive(false);
+        }
+
+        public void ListPipeRemove(PipeData pipe)
+        {
+            pipe.Rigidbody.useGravity = false;
+            pipes.Remove(pipe.Transform.gameObject);
+            _location.Remove(pipe.Transform.gameObject);
+        }
+
+        public void Reset()
+        {
+            foreach (var VARIABLE in pipes.Keys)
+            {
+                PipePlacement(VARIABLE);
+            }
+            
+            foreach (var VARIABLE in poolChanges.Keys)
+            {
+                for (int i = 0; i < poolChanges[VARIABLE].Use.Count; i++)
+                {
+                    if (VARIABLE == PoolType.Stup)
+                    {
+                        Listadd(poolChanges[VARIABLE].Use[0],PoolType.Stup);   
+                    }
+                }
+            }
         }
     }
 }

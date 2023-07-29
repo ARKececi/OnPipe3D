@@ -31,6 +31,7 @@ namespace PlayerScripts.Controllers
             {
                 playerController.EnableGameOver();
                 CameraSignalable.Instance.onShakeCamera?.Invoke();
+                playerController.FinishobjFollow();
             }
 
             if (other.CompareTag("Spawn"))

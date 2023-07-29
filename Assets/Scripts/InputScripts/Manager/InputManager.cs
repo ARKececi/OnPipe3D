@@ -2,6 +2,7 @@
 using InputScripts.Signalable;
 using LevelScripts.Signalable;
 using PlayerScripts.Signalable;
+using UISicripts.Signalable;
 using UnityEngine;
 
 namespace InputScripts.InputManager
@@ -12,8 +13,7 @@ namespace InputScripts.InputManager
 
         #region Serialized Variables
 
-        [SerializeField] private bool isFirstTimeTouchTaken;
-        [SerializeField] private bool isFinishTimeTaken;
+        [SerializeField] private bool isFirstTimeTouchTaken, isFinishTimeTaken, gameOver, finish;
 
         #endregion
 
@@ -30,12 +30,16 @@ namespace InputScripts.InputManager
         {
             InputSignalable.Instance.onIsFinishTimeTaken += OnIsFinishTimeTaken;
             InputSignalable.Instance.onReset += OnReset;
+            InputSignalable.Instance.onGameOver += OnGameOver;
+            InputSignalable.Instance.onfinish += Onfinish;
         }
 
         private void UnsubscribeEvents()
         {
             InputSignalable.Instance.onIsFinishTimeTaken -= OnIsFinishTimeTaken;
             InputSignalable.Instance.onReset -= OnReset;
+            InputSignalable.Instance.onGameOver -= OnGameOver;
+            InputSignalable.Instance.onfinish -= Onfinish;
         }
 
         private void OnDisable()
@@ -54,11 +58,19 @@ namespace InputScripts.InputManager
                     LevelSignalable.Instance.onGameStart?.Invoke();
                     isFirstTimeTouchTaken = true;
                 }
+                
 
                 if (isFinishTimeTaken)
                 {
-                    LevelSignalable.Instance.onNextLevel?.Invoke();
+                    UISignalable.Instance.onGameNext?.Invoke();
                     isFinishTimeTaken = false;
+                }
+
+                if (gameOver)
+                {
+                    UISignalable.Instance.onGameOver?.Invoke();
+                    OnReset();
+                    gameOver = false;
                 }
             }
             if (Input.GetMouseButtonUp(0)) PlayerSignalable.Instance.onDeactiveScaleMovement?.Invoke();
@@ -73,6 +85,16 @@ namespace InputScripts.InputManager
         private void OnIsFinishTimeTaken()
         {
             isFinishTimeTaken = true;
+        }
+
+        private void Onfinish()
+        {
+            finish = true;
+        }
+
+        private void OnGameOver()
+        {
+            gameOver = true;
         }
     }
 }

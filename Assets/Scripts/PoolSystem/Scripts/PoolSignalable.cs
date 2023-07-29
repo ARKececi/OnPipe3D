@@ -13,5 +13,7 @@ namespace Signalable
         public Func<PoolType,GameObject> onListRemove = delegate { return null;};
         public UnityAction<PipeData> onListPipeAdd = delegate { };
         public UnityAction<GameObject> onPipePlacement = delegate { };
+        public UnityAction<PipeData> onListPipeRemove = delegate { };
+        public UnityAction onReset = delegate { };
     }
 }

@@ -6,6 +6,7 @@ using LevelScripts.Data.UnityObject;
 using LevelScripts.Data.ValueObject;
 using LevelScripts.Signalable;
 using PlayerScripts.Signalable;
+using UISicripts.Signalable;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -27,13 +28,9 @@ namespace LevelScripts.Manager
 
         #region Private Variables
         
-        private List<GameObject> levelRods = new List<GameObject>();
-        private int _levelCount;
-        private int _rodCount;
-        private int _levelID;
-        private int _spawnDotPostionY;
-        private int _startRodCount;
-        private bool _isFirstTimeTouchTaken;
+        [SerializeField] private List<GameObject> levelRods = new List<GameObject>();
+        private int _levelCount, _rodCount, _levelID, _spawnDotPostionY, _startRodCount;
+        [SerializeField]private bool _isFirstTimeTouchTaken;
 
         #endregion
 
@@ -59,6 +56,7 @@ namespace LevelScripts.Manager
             LevelSignalable.Instance.onNextRod += OnNextRod;
             LevelSignalable.Instance.onGameStart += OnGameStart;
             LevelSignalable.Instance.onNextLevel += OnNextLevel;
+            LevelSignalable.Instance.onReset += OnReset;
         }
 
         private void UnsubscribeEvents()
@@ -66,6 +64,7 @@ namespace LevelScripts.Manager
             LevelSignalable.Instance.onNextRod -= OnNextRod;
             LevelSignalable.Instance.onGameStart -= OnGameStart;
             LevelSignalable.Instance.onNextLevel -= OnNextLevel;
+            LevelSignalable.Instance.onReset -= OnReset;
         }
 
         private void OnDisable()
@@ -86,11 +85,11 @@ namespace LevelScripts.Manager
 
         private void LevelClear(List<GameObject> levelRods)
         {
+            clearlevel.ClearLevel(levelRods);
             for (int i = 0; i < levelRods.Count; i++)
             {
                 levelRods.Remove(levelRods[0]);
             }
-            clearlevel.ClearLevel(levelRods);
         }
 
         private void OnGameStart()
@@ -123,17 +122,28 @@ namespace LevelScripts.Manager
             _levelID++;
             _levelID %= _levelData.Count;
             LevelClear(levelRods);
-            LevelAdd(_levelID);
-            PlayerSignalable.Instance.onReset?.Invoke();
-            CameraSignalable.Instance.onReset?.Invoke();
-            Reset();
+            levelRods = LevelAdd(_levelID);
+            OnReset();
         }
 
-        private void Reset()
+        private void RodActiveFalse()
         {
+            foreach (var VARIABLE in levelRods)
+            {
+                VARIABLE.SetActive(false);
+            }
+        }
+
+        private void OnReset()
+        {
+            RodActiveFalse();
+            _isFirstTimeTouchTaken = false;
+            _spawnDotPostionY = 0;
             _startRodCount = 0;
             _rodCount = 1;
+            levelRods[0].transform.position = Vector3.zero;
             levelRods[0].SetActive(true);
+            finish.SetActive(false);
         }
     }
 }

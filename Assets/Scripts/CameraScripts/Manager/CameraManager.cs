@@ -1,6 +1,7 @@
 using System;
 using CameraScripts.Signalable;
 using Cinemachine;
+using DG.Tweening;
 using UnityEngine;
 
 namespace CameraScripts.CameraManager
@@ -83,25 +84,13 @@ namespace CameraScripts.CameraManager
 
         private void ShakeTimer()
         {
-            if (_trigger) return;
-            if (_timer < 0)
-            {
-                cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0f;
-                _trigger = true;
-            }
-            _timer -= Time.deltaTime;
+            cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0f;
         }
 
         private void OnShakeCamera()
         {
             cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = amplitudeGain;
-            _trigger = false;
-            _timer = timer;
-        }
-
-        private void Update()
-        {
-            ShakeTimer();
+            DOVirtual.DelayedCall(timer, () => ShakeTimer());
         }
 
         private void OnReset()

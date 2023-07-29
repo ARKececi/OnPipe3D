@@ -1,5 +1,6 @@
 ﻿using System;
 using CameraScripts.Signalable;
+using InputScripts.Signalable;
 using PlayerScripts.Data.ValueObject;
 using UnityEngine;
 
@@ -19,6 +20,8 @@ namespace PlayerScripts.Controllers
 
         [SerializeField] private Rigidbody rigidbody;
         [SerializeField] private Transform playerTransform;
+        [SerializeField] private GameObject finishObj;
+        [SerializeField] private Rigidbody finishObjRigidbody;
 
         #endregion
 
@@ -32,7 +35,7 @@ namespace PlayerScripts.Controllers
         #endregion
         public void EnableScaleBoundary(){_reduceBoundary = true;}
         public void DisableScaleBoundary(){_reduceBoundary = false;}
-        public void EnableGameOver(){ _gameOver = true;}
+        public void EnableGameOver(){ _gameOver = true; InputSignalable.Instance.onGameOver?.Invoke();}
 
         public void PlayerData(PlayerData playerData)
         {
@@ -74,6 +77,13 @@ namespace PlayerScripts.Controllers
         private void ReduceScale() { playerTransform.localScale = new Vector3(playerTransform.localScale.x - _playerData.Amount, playerTransform.localScale.y, playerTransform.localScale.z - _playerData.Amount);}
         private void EnlargeScale() { playerTransform.localScale = new Vector3(playerTransform.localScale.x + _playerData.Amount, playerTransform.localScale.y, playerTransform.localScale.z + _playerData.Amount);}
 
+        public void FinishobjFollow()
+        {
+            finishObj.transform.position = new Vector3(0,transform.position.y,0);
+            finishObjRigidbody.AddForce(finishObj.transform.up * 2,ForceMode.Impulse);
+            CameraSignalable.Instance.onSetCamera?.Invoke(finishObj);
+        }
+        
         private void FixedUpdate()
         {
             Move();
@@ -89,6 +99,7 @@ namespace PlayerScripts.Controllers
         {
             _gameOver = false;
             IsReadyToScaleMove = false;
+            _reduceBoundary = false;
             playerTransform.localScale = _largeBoundary;
             playerTransform.position = _startPosition;
         }
