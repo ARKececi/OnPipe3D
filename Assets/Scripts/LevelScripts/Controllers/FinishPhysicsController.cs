@@ -1,5 +1,7 @@
 ﻿using System;
 using InputScripts.Signalable;
+using UISicripts.Enum;
+using UISicripts.Signalable;
 using UnityEngine;
 
 namespace LevelScripts.Controllers
@@ -22,6 +24,7 @@ namespace LevelScripts.Controllers
             {
                 finishController.FinishobjFollow(other.gameObject);
                 InputSignalable.Instance.onIsFinishTimeTaken?.Invoke();
+                UISignalable.Instance.onPanelAction?.Invoke(UIPanel.FinishPanel);
             }
         }
     }

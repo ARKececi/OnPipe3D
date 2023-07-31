@@ -1,4 +1,5 @@
-﻿using CameraScripts.Signalable;
+﻿using System;
+using CameraScripts.Signalable;
 using DG.Tweening;
 using InputScripts.Signalable;
 using LevelScripts.Signalable;
@@ -19,12 +20,12 @@ namespace UISicripts.Manager
 
         #region Serialized Variables
 
-        [SerializeField] private Image FinishPanel;
+        [SerializeField] private UIPanelController uıPanelController;
 
         #endregion
 
         #endregion
-        
+
         #region Event Subscription
 
         private void OnEnable()
@@ -36,12 +37,20 @@ namespace UISicripts.Manager
         {
             UISignalable.Instance.onGameNext += OnGameNext;
             UISignalable.Instance.onGameOver += OnGameOver;
+            UISignalable.Instance.onScoreSet += OnScoreSet;
+            UISignalable.Instance.onLevelSet += OnLevelSet;
+            UISignalable.Instance.onPanelAction += OnPanelAction;
+            UISignalable.Instance.onPanelReset += OnPanelReset;
         }
 
         private void UnsubscribeEvents()
         {
             UISignalable.Instance.onGameNext -= OnGameNext;
             UISignalable.Instance.onGameOver -= OnGameOver;
+            UISignalable.Instance.onScoreSet -= OnScoreSet;
+            UISignalable.Instance.onLevelSet -= OnLevelSet;
+            UISignalable.Instance.onPanelAction -= OnPanelAction;
+            UISignalable.Instance.onPanelReset -= OnPanelReset;
         }
 
         private void OnDisable()
@@ -57,6 +66,7 @@ namespace UISicripts.Manager
             PlayerSignalable.Instance.onReset?.Invoke();
             CameraSignalable.Instance.onReset?.Invoke();
             InputSignalable.Instance.onReset?.Invoke();
+            OnPanelReset(UIPanel.FinishPanel);
         }
 
         private void OnGameNext()
@@ -66,11 +76,28 @@ namespace UISicripts.Manager
             PlayerSignalable.Instance.onReset?.Invoke();
             CameraSignalable.Instance.onReset?.Invoke();
             InputSignalable.Instance.onReset?.Invoke();
+            OnPanelReset(UIPanel.FinishPanel);
+        }
+        
+
+        private void OnPanelReset(UIPanel panel)
+        {
+            uıPanelController.PanelsReset(panel);
         }
 
-        private void PanelAlpha()
+        private void OnScoreSet(int score)
         {
-            
+            uıPanelController.ScoreText(score);
+        }
+
+        private void OnLevelSet(int level)
+        {
+            uıPanelController.LevelSet(level);
+        }
+
+        private void OnPanelAction(UIPanel panel)
+        {
+            uıPanelController.PanelAction(panel);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using CameraScripts.Signalable;
 using LevelScripts.Signalable;
+using UISicripts.Enum;
+using UISicripts.Signalable;
 using UnityEngine;
 
 namespace PlayerScripts.Controllers
@@ -32,11 +34,17 @@ namespace PlayerScripts.Controllers
                 playerController.EnableGameOver();
                 CameraSignalable.Instance.onShakeCamera?.Invoke();
                 playerController.FinishobjFollow();
+                UISignalable.Instance.onPanelAction?.Invoke(UIPanel.FinishPanel);
             }
 
             if (other.CompareTag("Spawn"))
             {
                 LevelSignalable.Instance.onNextRod?.Invoke();
+            }
+
+            if (other.CompareTag("Ring"))
+            {
+                UISignalable.Instance.onScoreSet?.Invoke(1);
             }
         }
 

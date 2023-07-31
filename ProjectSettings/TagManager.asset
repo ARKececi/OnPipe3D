@@ -9,6 +9,7 @@ TagManager:
   - Ball
   - Spawn
   - Stub
+  - Ring
   layers:
   - Default
   - TransparentFX

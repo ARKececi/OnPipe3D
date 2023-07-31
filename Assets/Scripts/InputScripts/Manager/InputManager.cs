@@ -2,6 +2,7 @@
 using InputScripts.Signalable;
 using LevelScripts.Signalable;
 using PlayerScripts.Signalable;
+using UISicripts.Enum;
 using UISicripts.Signalable;
 using UnityEngine;
 
@@ -56,6 +57,8 @@ namespace InputScripts.InputManager
                 if (isFirstTimeTouchTaken != true)
                 {
                     LevelSignalable.Instance.onGameStart?.Invoke();
+                    UISignalable.Instance.onPanelAction.Invoke(UIPanel.ScorePanel);
+                    UISignalable.Instance.onPanelReset?.Invoke(UIPanel.FinishPanel);
                     isFirstTimeTouchTaken = true;
                 }
                 

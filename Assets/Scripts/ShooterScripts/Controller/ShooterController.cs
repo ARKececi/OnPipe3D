@@ -22,8 +22,9 @@ namespace ShooterScripts.Controller
         {
             foreach (var pipeData in pipes)
             {
+                Vector3 pipe = pipeData.Rigidbody.transform.position;
                 pipeData.Rigidbody.useGravity = true;
-                pipeData.Rigidbody.AddForce(pipeData.Rigidbody.transform.right * force, ForceMode.Impulse);
+                pipeData.Rigidbody.AddForce(new Vector3(pipe.x * force,0,pipe.z), ForceMode.Impulse);
                 pipeData.Rigidbody.AddForce(pipeData.Rigidbody.transform.up * force, ForceMode.Impulse);
             }
         }

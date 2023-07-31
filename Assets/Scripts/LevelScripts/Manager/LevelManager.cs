@@ -23,6 +23,7 @@ namespace LevelScripts.Manager
         [SerializeField] private LevelLoaderController levelLoader;
         [SerializeField] private LevelClearController clearlevel;
         [SerializeField] private GameObject finish;
+        [SerializeField] private int levelCount;
 
         #endregion
 
@@ -40,7 +41,7 @@ namespace LevelScripts.Manager
         {
             _rodCount++;
             _levelData = GetLevelData();
-            levelRods = LevelAdd(_levelID);
+            levelRods = LevelAdd();
             levelRods[0].SetActive(true);
         }
         
@@ -78,9 +79,12 @@ namespace LevelScripts.Manager
             return Resources.Load<CD_LevelData>("Data/CD_LevelData").LevelData;
         }
 
-        private List<GameObject> LevelAdd(int levelID)
+        private List<GameObject> LevelAdd()
         {
-            return levelLoader.LoaderLevel(_levelData[levelID], levelHolder.transform);
+            _levelID %= _levelData.Count;
+            _levelCount++;
+            UISignalable.Instance.onLevelSet?.Invoke(_levelCount);
+            return levelLoader.LoaderLevel(_levelData[_levelID], levelHolder.transform);
         }
 
         private void LevelClear(List<GameObject> levelRods)
@@ -99,7 +103,7 @@ namespace LevelScripts.Manager
 
         private void OnNextRod()
         {
-            if (_startRodCount < 4)
+            if (_startRodCount < levelCount)
             {
                 GameObject levelrod = levelRods[_rodCount % levelRods.Count];
                 levelrod.SetActive(false);
@@ -120,9 +124,8 @@ namespace LevelScripts.Manager
         private void OnNextLevel()
         {
             _levelID++;
-            _levelID %= _levelData.Count;
             LevelClear(levelRods);
-            levelRods = LevelAdd(_levelID);
+            levelRods = LevelAdd();
             OnReset();
         }
 

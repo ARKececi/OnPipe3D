@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8138128156141608941}
   m_Layer: 0
   m_Name: Pipes
-  m_TagString: Untagged
+  m_TagString: Ring
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,7 +96,6 @@ MonoBehaviour:
     Rigidbody: {fileID: 5054341441872900621}
   - Transform: {fileID: 5054341441488794526}
     Rigidbody: {fileID: 5054341441488794527}
-  timer: 2
 --- !u!114 &8138128156141608943
 MonoBehaviour:
   m_ObjectHideFlags: 0

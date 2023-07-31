@@ -3,5 +3,6 @@
     public enum UIPanel
     {
         FinishPanel,
+        ScorePanel
     }
 }
