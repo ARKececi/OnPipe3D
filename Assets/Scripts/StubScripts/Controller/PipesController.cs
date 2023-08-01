@@ -16,6 +16,7 @@ namespace PipesScripts.Controller
         #region Serialized Variables
 
         [SerializeField] private List<PipeData> pipesRigidbodies = new List<PipeData>();
+        [SerializeField] private GameObject look;
 
         #endregion
 

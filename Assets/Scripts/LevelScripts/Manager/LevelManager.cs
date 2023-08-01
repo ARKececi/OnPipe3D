@@ -6,9 +6,11 @@ using LevelScripts.Data.UnityObject;
 using LevelScripts.Data.ValueObject;
 using LevelScripts.Signalable;
 using PlayerScripts.Signalable;
+using SaveScripts.Signalable;
 using UISicripts.Signalable;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 
 namespace LevelScripts.Manager
 {
@@ -23,7 +25,7 @@ namespace LevelScripts.Manager
         [SerializeField] private LevelLoaderController levelLoader;
         [SerializeField] private LevelClearController clearlevel;
         [SerializeField] private GameObject finish;
-        [SerializeField] private int levelCount;
+        [SerializeField] private int levelRodCount;
 
         #endregion
 
@@ -41,6 +43,8 @@ namespace LevelScripts.Manager
         {
             _rodCount++;
             _levelData = GetLevelData();
+            _levelID = GetActiveLevel();
+            _levelCount = _levelID;
             levelRods = LevelAdd();
             levelRods[0].SetActive(true);
         }
@@ -58,6 +62,7 @@ namespace LevelScripts.Manager
             LevelSignalable.Instance.onGameStart += OnGameStart;
             LevelSignalable.Instance.onNextLevel += OnNextLevel;
             LevelSignalable.Instance.onReset += OnReset;
+            LevelSignalable.Instance.onSaveLevel += OnSaveLevel;
         }
 
         private void UnsubscribeEvents()
@@ -66,6 +71,7 @@ namespace LevelScripts.Manager
             LevelSignalable.Instance.onGameStart -= OnGameStart;
             LevelSignalable.Instance.onNextLevel -= OnNextLevel;
             LevelSignalable.Instance.onReset -= OnReset;
+            LevelSignalable.Instance.onSaveLevel -= OnSaveLevel;
         }
 
         private void OnDisable()
@@ -78,6 +84,14 @@ namespace LevelScripts.Manager
         {
             return Resources.Load<CD_LevelData>("Data/CD_LevelData").LevelData;
         }
+        
+        private int GetActiveLevel()
+        {
+            if (!ES3.FileExists()) return 0;
+            return ES3.KeyExists("LevelCount") ? ES3.Load<int>("LevelCount") : 0;
+        }
+
+        public int OnSaveLevel(){ return _levelCount; }
 
         private List<GameObject> LevelAdd()
         {
@@ -103,7 +117,7 @@ namespace LevelScripts.Manager
 
         private void OnNextRod()
         {
-            if (_startRodCount < levelCount)
+            if (_startRodCount < levelRodCount)
             {
                 GameObject levelrod = levelRods[_rodCount % levelRods.Count];
                 levelrod.SetActive(false);

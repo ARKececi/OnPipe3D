@@ -34,7 +34,9 @@ namespace PlayerScripts.Controllers
                 playerController.EnableGameOver();
                 CameraSignalable.Instance.onShakeCamera?.Invoke();
                 playerController.FinishobjFollow();
+                UISignalable.Instance.onLevelComplated?.Invoke(false);
                 UISignalable.Instance.onPanelAction?.Invoke(UIPanel.FinishPanel);
+                UISignalable.Instance.onPanelReset?.Invoke(UIPanel.ScorePanel);
             }
 
             if (other.CompareTag("Spawn"))

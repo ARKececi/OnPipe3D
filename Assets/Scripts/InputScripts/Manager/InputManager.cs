@@ -59,6 +59,7 @@ namespace InputScripts.InputManager
                     LevelSignalable.Instance.onGameStart?.Invoke();
                     UISignalable.Instance.onPanelAction.Invoke(UIPanel.ScorePanel);
                     UISignalable.Instance.onPanelReset?.Invoke(UIPanel.FinishPanel);
+                    UISignalable.Instance.onPanelReset?.Invoke(UIPanel.StartPanel);
                     isFirstTimeTouchTaken = true;
                 }
                 

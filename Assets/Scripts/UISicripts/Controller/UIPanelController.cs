@@ -4,6 +4,7 @@ using TMPro;
 using UISicripts.Enum;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UISicripts.Controller
@@ -18,7 +19,9 @@ namespace UISicripts.Controller
         [SerializeField] private GameObject scorePanel;
         [SerializeField] private List<TextMeshProUGUI> scoreTextMeshPro = new List<TextMeshProUGUI>();
         [SerializeField] private List<TextMeshProUGUI> levelTextMeshPro = new List<TextMeshProUGUI>();
-        [SerializeField] private TextMeshProUGUI levelComplate;
+        [SerializeField] private TextMeshProUGUI levelComplated;
+        [SerializeField] private TextMeshProUGUI bestScore;
+        [SerializeField] private List<TextMeshProUGUI> startTextMeshPro = new List<TextMeshProUGUI>();
         [SerializeField] private Color color;
         [SerializeField] private float timer;
 
@@ -27,6 +30,7 @@ namespace UISicripts.Controller
         #region Private Variables
 
         private int _score;
+        private int _complated;
 
         #endregion
 
@@ -34,7 +38,13 @@ namespace UISicripts.Controller
         
         private void Awake()
         {
-            
+            bestScore.text = "BEST " + GetBestScore();
+        }
+        
+        private int GetBestScore()
+        {
+            if (!ES3.FileExists()) return 0;
+            return ES3.KeyExists("BestScore") ? ES3.Load<int>("BestScore") : 0;
         }
 
         public void PanelAction(UIPanel panelParam )
@@ -42,20 +52,28 @@ namespace UISicripts.Controller
             switch (panelParam)
             {   
                 case UIPanel.ScorePanel :
-                    //scorePanel.transform.DOMoveX(0f, .2f);
+                    scorePanel.transform.DOMoveX(0f, .2f);
                     break;
                 case UIPanel.FinishPanel:
-                    scorePanel.transform.DOMoveX(-800f, timer);
                     finishPanelImage.DOColor(new Color(0, 0, 0, color.a), timer).OnComplete(()=>
                     {
                         levelTextMeshPro[0].DOColor(Color.white, timer).OnComplete(() =>
                         {
-                            levelComplate.DOColor(Color.white, timer).OnComplete(() =>
+                            levelComplated.DOColor(Color.white, timer).OnComplete(() =>
                             {
-                                scoreTextMeshPro[0].DOColor(Color.white, timer);
+                                scoreTextMeshPro[0].DOColor(Color.white, timer).OnComplete(() =>
+                                {
+                                    bestScore.DOColor(Color.white, timer);
+                                });
                             });
                         });
                     });
+                    break;
+                case UIPanel.StartPanel :
+                    foreach (var VARIABLE in startTextMeshPro)
+                    {
+                        VARIABLE.DOColor(Color.white, timer);
+                    }
                     break;
             }
         }
@@ -65,15 +83,20 @@ namespace UISicripts.Controller
             switch (panelParam)
             {
                 case UIPanel.ScorePanel :
-                    scorePanel.transform.DOMoveX(-800f, .2f);
-                    
+                    scorePanel.transform.DOKill(); scorePanel.transform.DOMoveX(-800f, .2f);
                     break;
                 case UIPanel.FinishPanel :
-                    scorePanel.transform.DOMoveX(0f, .2f);
-                    finishPanelImage.color = new Color(0, 0, 0, 0);
-                    scoreTextMeshPro[0].color = new Color(1, 1, 1, 0);
-                    levelComplate.color = new(1, 1, 1, 0);
-                    levelTextMeshPro[0].color = new Color(1, 1, 1, 0);
+                    finishPanelImage.DOKill(); finishPanelImage.color = new Color(0, 0, 0, 0);
+                    scoreTextMeshPro[0].DOKill(); scoreTextMeshPro[0].color = new Color(1, 1, 1, 0);
+                    levelComplated.DOKill(); levelComplated.color = new(1, 1, 1, 0);
+                    levelTextMeshPro[0].DOKill(); levelTextMeshPro[0].color = new Color(1, 1, 1, 0);
+                    bestScore.DOKill(); bestScore.color = new Color(1, 1, 1, 0);
+                    break;
+                case UIPanel.StartPanel :
+                    foreach (var VARIABLE in startTextMeshPro)
+                    {
+                        VARIABLE.DOColor(new Color(1,1,1,0), timer);
+                    }
                     break;
             }
         }
@@ -86,13 +109,37 @@ namespace UISicripts.Controller
             }
         }
 
-        public void ScoreText(int score)
+        public void ScoreSet(int score)
         {
+            _complated += score;
             _score += score;
             foreach (var VARIABLE in scoreTextMeshPro)
             {
                 VARIABLE.text = _score.ToString();
             }
+        }
+
+        public void LevelComplated(bool final)
+        {
+            if (final) levelComplated.text = "CLEARED";
+            else levelComplated.text = "COMPLATED " + _complated + "%";
+            _complated = 0;
+        }
+
+        public int BestScore()
+        {
+            if (_score > GetBestScore())
+            {
+                bestScore.text = "BEST " + _score;
+                return _score;
+            }
+            else return GetBestScore();
+        }
+
+        public void ScoreReset()
+        {
+            _score = 0;
+            ScoreSet(_score);
         }
     }
 }

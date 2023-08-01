@@ -1,5 +1,7 @@
-﻿using Extention;
+﻿using System;
+using Extention;
 using UISicripts.Enum;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,5 +15,7 @@ namespace UISicripts.Signalable
         public UnityAction<int> onLevelSet = delegate { };
         public UnityAction<UIPanel> onPanelAction = delegate { };
         public UnityAction<UIPanel> onPanelReset = delegate { };
+        public UnityAction<bool> onLevelComplated = delegate { };
+        public Func<int> onBestScore = delegate { return 0; };
     }
 }

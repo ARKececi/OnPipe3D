@@ -41,6 +41,8 @@ namespace UISicripts.Manager
             UISignalable.Instance.onLevelSet += OnLevelSet;
             UISignalable.Instance.onPanelAction += OnPanelAction;
             UISignalable.Instance.onPanelReset += OnPanelReset;
+            UISignalable.Instance.onLevelComplated += OnLevelComplated;
+            UISignalable.Instance.onBestScore += OnBestScore;
         }
 
         private void UnsubscribeEvents()
@@ -51,6 +53,8 @@ namespace UISicripts.Manager
             UISignalable.Instance.onLevelSet -= OnLevelSet;
             UISignalable.Instance.onPanelAction -= OnPanelAction;
             UISignalable.Instance.onPanelReset -= OnPanelReset;
+            UISignalable.Instance.onLevelComplated -= OnLevelComplated;
+            UISignalable.Instance.onBestScore -= OnBestScore;
         }
 
         private void OnDisable()
@@ -67,6 +71,9 @@ namespace UISicripts.Manager
             CameraSignalable.Instance.onReset?.Invoke();
             InputSignalable.Instance.onReset?.Invoke();
             OnPanelReset(UIPanel.FinishPanel);
+            OnPanelAction(UIPanel.ScorePanel);
+            OnPanelAction(UIPanel.StartPanel);
+            OnScoreReset();
         }
 
         private void OnGameNext()
@@ -77,6 +84,8 @@ namespace UISicripts.Manager
             CameraSignalable.Instance.onReset?.Invoke();
             InputSignalable.Instance.onReset?.Invoke();
             OnPanelReset(UIPanel.FinishPanel);
+            OnPanelAction(UIPanel.ScorePanel);
+            OnPanelAction(UIPanel.StartPanel);
         }
         
 
@@ -87,7 +96,7 @@ namespace UISicripts.Manager
 
         private void OnScoreSet(int score)
         {
-            uıPanelController.ScoreText(score);
+            uıPanelController.ScoreSet(score);
         }
 
         private void OnLevelSet(int level)
@@ -98,6 +107,21 @@ namespace UISicripts.Manager
         private void OnPanelAction(UIPanel panel)
         {
             uıPanelController.PanelAction(panel);
+        }
+
+        private void OnLevelComplated(bool final)
+        {
+            uıPanelController.LevelComplated(final);
+        }
+
+        private void OnScoreReset()
+        {
+            uıPanelController.ScoreReset();
+        }
+
+        private int OnBestScore()
+        {
+            return uıPanelController.BestScore();
         }
     }
 }

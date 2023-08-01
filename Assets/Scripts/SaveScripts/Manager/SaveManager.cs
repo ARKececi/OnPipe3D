@@ -1,5 +1,7 @@
-﻿using SaveScripts.Signalable;
+﻿using LevelScripts.Signalable;
+using SaveScripts.Signalable;
 using SaveScripts.Struck;
+using UISicripts.Signalable;
 using UnityEngine;
 
 namespace SaveScripts
@@ -33,13 +35,15 @@ namespace SaveScripts
         {
             OnSaveGame(new SaveDataParams()
             {
-                LevelCount = 0
+                LevelCount = (int)LevelSignalable.Instance.onSaveLevel?.Invoke(),
+                BestScore = (int)UISignalable.Instance.onBestScore?.Invoke()
             });
         }
         
         private void OnSaveGame(SaveDataParams saveDataParams)
         {
             ES3.Save("LevelCount", saveDataParams.LevelCount);
+            ES3.Save("BestScore", saveDataParams.BestScore);
         }
     }
 }
