@@ -27,7 +27,8 @@ namespace Controllers.PoolController
         #region Private Variables
 
         private SerializedDictionary<GameObject, LocationData> _location = new SerializedDictionary<GameObject, LocationData> ();
-
+        private const string _dataPath = "Data/CD_Pool";
+        
         #endregion
 
         #endregion
@@ -45,7 +46,7 @@ namespace Controllers.PoolController
 
         private SerializedDictionary<PoolType, PoolData> GetWeaponData()
         {
-            return Resources.Load<CD_Pool>("Data/CD_Pool").PoolDatas;
+            return Resources.Load<CD_Pool>(_dataPath).PoolDatas;
         }
         
         private void Pooling()

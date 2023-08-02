@@ -31,9 +31,11 @@ namespace LevelScripts.Manager
 
         #region Private Variables
         
-        [SerializeField] private List<GameObject> levelRods = new List<GameObject>();
+        private List<GameObject> levelRods = new List<GameObject>();
         private int _levelCount, _rodCount, _levelID, _spawnDotPostionY, _startRodCount;
-        [SerializeField]private bool _isFirstTimeTouchTaken;
+        private bool _isFirstTimeTouchTaken;
+        private const string _dataPath = "Data/CD_LevelData";
+        private const string _savePath = "LevelCount";
 
         #endregion
 
@@ -82,13 +84,13 @@ namespace LevelScripts.Manager
 
         private SerializedDictionary<int, LevelData> GetLevelData()
         {
-            return Resources.Load<CD_LevelData>("Data/CD_LevelData").LevelData;
+            return Resources.Load<CD_LevelData>(_dataPath).LevelData;
         }
         
         private int GetActiveLevel()
         {
             if (!ES3.FileExists()) return 0;
-            return ES3.KeyExists("LevelCount") ? ES3.Load<int>("LevelCount") : 0;
+            return ES3.KeyExists(_savePath) ? ES3.Load<int>(_savePath) : 0;
         }
 
         public int OnSaveLevel(){ return _levelCount; }

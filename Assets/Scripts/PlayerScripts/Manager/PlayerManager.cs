@@ -19,6 +19,7 @@ namespace PlayerScripts.Manager
         #region Private Variables
 
         private PlayerData _playerData;
+        private const string _dataPath = "Data/CD_PlayerData";
         
         #endregion
 
@@ -59,7 +60,7 @@ namespace PlayerScripts.Manager
 
         private PlayerData GetPlayerData()
         {
-            return Resources.Load<CD_PlayerData>("Data/CD_PlayerData").PlayerData;
+            return Resources.Load<CD_PlayerData>(_dataPath).PlayerData;
         }
 
         private void OnEnableScaleMovement()

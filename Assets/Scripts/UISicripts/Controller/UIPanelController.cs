@@ -31,6 +31,7 @@ namespace UISicripts.Controller
 
         private int _score;
         private int _complated;
+        private const string _bestScore = "BestScore";
 
         #endregion
 
@@ -44,7 +45,7 @@ namespace UISicripts.Controller
         private int GetBestScore()
         {
             if (!ES3.FileExists()) return 0;
-            return ES3.KeyExists("BestScore") ? ES3.Load<int>("BestScore") : 0;
+            return ES3.KeyExists(_bestScore) ? ES3.Load<int>(_bestScore) : 0;
         }
 
         public void PanelAction(UIPanel panelParam )
